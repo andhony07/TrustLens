@@ -379,7 +379,6 @@ For proposed changes:
 3. Run the automated test suite.
 4. Update documentation when behavior or API contracts change.
 5. Open a pull request describing the motivation, implementation, and verification performed.
-6. 
 ---
 
 <div align="center">
