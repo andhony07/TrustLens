@@ -379,11 +379,7 @@ For proposed changes:
 3. Run the automated test suite.
 4. Update documentation when behavior or API contracts change.
 5. Open a pull request describing the motivation, implementation, and verification performed.
-
-## License
-
-No license is specified in this README. Add a `LICENSE` file and update this section if you intend to grant others explicit permission to use, modify, and distribute the project.
-
+6. 
 ---
 
 <div align="center">
