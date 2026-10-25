@@ -1,305 +1,237 @@
-# TrustLens AI 🔍🛡️
+TrustLens AI
+Think before you trust.
 
-> **"See the warning signs before you trust the message."**  
-> *A deterministic scam-detection and explainable risk-scoring platform empowering students to assess suspicious internship offers, scholarship messages, job postings, URLs, and forwarded texts.*
+An explainable, privacy-first scam-risk assessment tool that helps students evaluate suspicious internship offers, scholarship messages, job postings, URLs, and forwarded texts.
 
----
+TrustLens AI is a local-first cybersecurity triage application built with FastAPI, Pydantic, HTML, CSS, and vanilla JavaScript. It uses a deterministic rule-based engine to identify suspicious patterns, explain the evidence, calculate a risk score from 0–100, and recommend practical next steps.
+Important: TrustLens provides a heuristic assessment, not a definitive fraud verdict. Always verify offers through official channels.
 
-## 1. Project Purpose
+Contents
+- Why TrustLens?
+- Features
+- How It Works
+- Risk Score Guide
+- Technology Stack
+- Project Structure
+- Requirements
+- Installation
+- Run the Application
+- API Reference
+- Run Tests
+- Privacy and Security
+- Limitations
+- AI-Assisted Development Disclosure
+Why TrustLens?
+Students may receive fraudulent internship offers, fake scholarship announcements, job postings, and messages designed to steal money or credentials. Common tactics include upfront fees, artificial deadlines, suspicious links, and requests for one-time passwords (OTPs).
 
-College and university students are increasingly targeted by sophisticated employment scams, predatory scholarship schemes, and credential-harvesting attacks. Fraudulent recruiters exploit urgency, fake corporate branding, and financial pressure, promising high-paying remote roles while demanding "laptop deposits", registration fees, or 2FA verification codes (OTPs).
+TrustLens helps users spot warning signs before acting. Instead of returning only a label, it explains which indicators were detected and suggests what to do next.
+Features
+Two connected views
+- Product landing page (#home) — introduces the product, threat categories, analysis workflow, explainability, and privacy principles.
+- Analyzer workspace (#analyzer) — provides a focused message-analysis interface, risk gauge, evidence breakdown, and recommendations.
+- Hash-based navigation — supports direct links, refresh persistence, and browser Back/Forward navigation between views.
+Explainable risk analysis
+- Deterministic rule-based detection rather than a generative model.
+- Risk score from 0 to 100, with four risk bands.
+- Weighted scoring with diminishing returns, multi-indicator escalation, and duplicate-evidence suppression.
+- Findings include rule identifiers, categories, severity, matched evidence, explanations, and recommended actions.
+- Context and negation safeguards help distinguish suspicious wording from educational warnings such as “never share your OTP.”
+- Positive hygiene signals can identify reassuring context, but never prove that a message is legitimate.
+Privacy-conscious interaction
+- Recent analyses are held in JavaScript memory only, with up to five entries.
+- History does not retain the original message text; it allows users to revisit structured reports without another API request.
+- Recent history disappears when the page is refreshed or the tab is closed.
+- The application is designed for local processing and does not require external API keys.
+- Findings and history are rendered using safe DOM APIs such as textContent.
+Useful workflow features
+- Prioritized recommendations for suspicious messages.
+- Copyable assessment reports in Markdown format.
+- Responsive dark cybersecurity interface.
+- Educational “How It Works” content covering detection, scoring, and limitations.
+How It Works
+1. Submit a message — paste an internship offer, scholarship message, job posting, or other suspicious text into the analyzer.
+2. Inspect patterns — deterministic detectors look for known financial, urgency, credential, URL, and employment-related indicators.
+3. Calculate risk — the scoring engine combines detected indicators and maps the result to a risk band.
+4. Review evidence — inspect matched evidence, explanations, and severity rather than relying only on the score.
+5. Choose a safer next step — follow the recommendations and verify the sender through official channels.
+Risk score guide
+Score	Level	Interpretation
+0–19	Low	Few explicit risk indicators were detected. Continue using normal caution.
+20–44	Moderate	Some atypical patterns warrant closer inspection.
+45–69	High	Multiple or substantial warning signs call for independent verification.
+70–100	Critical	Strong warning signs may include upfront payment demands or credential harvesting. Avoid acting until independently verified.
 
-**TrustLens AI** is an explainable, privacy-first cybersecurity triage tool built for the **Glitchathon Hackathon**. It evaluates untrusted solicitations in real time, extracts concrete evidence, calculates an interpretable **0–100 risk score**, and delivers actionable, student-centric safety recommendations.
 
----
+A low score does not mean that a message is safe. It means the current rules did not detect many explicit indicators.
+Detector identifiers
+The analyzer may return rule identifiers from categories such as:
+- FIN — financial manipulation, including upfront fee or deposit demands.
+- URG — urgency and pressure tactics.
+- SENS — sensitive information or credential requests.
+- URL — suspicious URL indicators.
+- EMP — employment and scholarship red flags.
+Exact findings depend on the implemented rules and the submitted text.
+Technology Stack
+Layer	Technology
+Backend API	Python, FastAPI
+Request/response validation	Pydantic
+ASGI server	Uvicorn
+Detection and scoring	Deterministic rules, regular expressions, contextual safeguards
+Frontend	HTML5, CSS, vanilla JavaScript
+Automated tests	pytest
 
-## 2. Key Features
 
-- **Dual-View Architecture (Home & Analyzer):**
-  - **Dedicated Product Landing Page (`#home`):** Hero section featuring *"Think before you trust"*, interactive threat interception simulation card, four detection category breakdowns, a 3-step workflow, explainability feature highlights, and privacy/limitations architecture.
-  - **Professional SOC Workspace Dashboard (`#analyzer`):** Full cybersecurity analysis environment with a persistent left sidebar, live recent count, radar-pulse empty state, circular SVG risk gauge, and responsive 2-column evidence breakdown.
-- **Client-Side Hash-Based Navigation:** Seamless switching between Home and Analyzer views (`#home` vs `#analyzer`) with full browser Back/Forward history support, instant deep-linking, and refresh persistence.
-- **Explainable Heuristic Engine:** Deterministic rule-based detection across 5 core categories—no black-box hallucinations or simulated AI claims.
-- **Interpretable Risk Scoring (0–100):** Weighted risk aggregation with diminishing returns, multi-flag synergy escalation, and duplicate-evidence suppression.
-- **Categorical Risk Bands:**
-  - `0–19`: **Low** (hygiene signals present, standard caution advised)
-  - `20–44`: **Moderate** (atypical patterns, elevated diligence required)
-  - `45–69`: **High** (substantial red flags detected, independent verification mandatory)
-  - `70–100`: **Critical** (severe threats: upfront fee demands, OTP harvesting, fake checks)
-- **Session-Only Recent Analyses:** Quick-access history of up to 5 evaluations stored in JavaScript memory only. Revisit past assessments with zero API re-requests; raw user text is never retained in memory, and data disappears on tab closure or refresh. Includes an accessible clear-history confirmation flow.
-- **Enhanced 4-Section Educational Modal:** Comprehensive breakdown covering:
-  - *Section A:* Deterministic pattern analysis principles.
-  - *Section B:* Interpretable score bands and heuristic definitions.
-  - *Section C:* Implemented detector signals (`FIN`, `URG`, `SENS`, `URL`, `EMP`, and negation context safeguards).
-  - *Section D:* Privacy architecture, volatile memory processing, and deployment caveats.
-- **Contextual Nuance & Negation Awareness:** Recognizes educational reminders and negation phrases (e.g., *"never share your OTP"*, *"we do not charge fees"*) to prevent false positives.
-- **Positive Hygiene Signals:** Identifies reassuring indicators (accredited `.edu`/`.gov` domains, enterprise ATS portals, explicit no-fee policies, multi-round technical assessments) without treating them as an absolute guarantee of authenticity.
-- **Zero Data Retention (Privacy-First):** In-memory processing only. User inputs are never logged, stored in databases, or forwarded to external third parties.
-- **XSS-Resistant Safe Rendering:** All findings, summaries, and historical records are rendered through secure DOM construction (`textContent`) to eliminate script injection risks.
-- **Actionable Student Next Steps:** Prioritized guidance (refusing off-platform messaging, contacting university career desks, reporting fraud).
-- **One-Click Assessment Export:** Copy structured markdown assessment reports directly to the clipboard.
-- **Responsive Dark SaaS Interface:** Cybersecurity aesthetic with SVG circular risk gauges, accessible focus states, and sample messages.
-
----
-
-## 3. Architecture
-
-TrustLens AI maintains a clean separation of concerns between its Python backend and vanilla web frontend:
-
-```
-trustlens-ai/
+No external AI API key is required for the baseline analyzer.
+Project Structure
+TrustLens/
 ├── backend/
 │   ├── app/
-│   │   ├── __init__.py           # Application package definition
-│   │   ├── main.py               # FastAPI entry point, CORS, static mounting
-│   │   ├── config.py             # App settings, origins, limits
-│   │   ├── schemas.py            # Pydantic validation models & enums
+│   │   ├── __init__.py
+│   │   ├── main.py
+│   │   ├── config.py
+│   │   ├── schemas.py
 │   │   ├── api/
 │   │   │   ├── __init__.py
-│   │   │   └── routes.py         # /api/health and /api/analyze endpoints
+│   │   │   └── routes.py
 │   │   └── services/
 │   │       ├── __init__.py
-│   │       ├── analyzer.py       # Orchestration pipeline
-│   │       ├── detectors.py      # Deterministic regex & contextual detectors
-│   │       ├── scoring.py        # Non-linear weighted scoring algorithm
-│   │       └── explanations.py   # Verdict generation & actionable recommendations
+│   │       ├── analyzer.py
+│   │       ├── detectors.py
+│   │       ├── scoring.py
+│   │       └── explanations.py
 │   ├── tests/
 │   │   ├── __init__.py
-│   │   ├── test_health.py        # Health & documentation route tests
-│   │   ├── test_validation.py    # Empty, whitespace, oversized input tests
-│   │   └── test_analysis.py      # Detection accuracy, negation & band tests
-│   └── requirements.txt          # Python dependencies
+│   │   ├── test_health.py
+│   │   ├── test_validation.py
+│   │   └── test_analysis.py
+│   └── requirements.txt
 ├── frontend/
-│   ├── index.html                # Semantic, accessible HTML5 layout
-│   ├── styles.css                # Dark cybersecurity SaaS design tokens
-│   └── app.js                    # ES6+ client logic, async fetch, animations
+│   ├── index.html
+│   ├── styles.css
+│   └── app.js
 ├── .gitignore
 └── README.md
-```
-
----
-
-## 4. System Requirements
-
-- **Python:** 3.12+ (or 3.14+)
-- **OS:** Windows, macOS, or Linux
-- **Browser:** Any modern browser (Chrome, Edge, Firefox, Safari)
-- **Zero External API Keys:** Operates 100% offline and locally.
-
----
-
-## 5. Installation Instructions
-
-Clone the repository and set up a virtual environment:
-
-### Windows (PowerShell / Command Prompt)
-
-```powershell
-# Navigate into the project directory
+Requirements
+- Python 3.12 or newer, compatible with the installed project dependencies.
+- Windows, macOS, or Linux.
+- A modern browser such as Chrome, Edge, Firefox, or Safari.
+- No external API keys for the baseline local application.
+Installation
+Windows PowerShell
+Run from the project directory:
 cd E:\TrustLens
-
-# Create virtual environment using uv or standard python venv
 python -m venv .venv
-
-# Activate the virtual environment
-.venv\Scripts\activate
-
-# Install backend dependencies
-pip install -r backend/requirements.txt
-```
-
-### macOS / Linux (Bash)
-
-```bash
-cd trustlens-ai
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r backend/requirements.txt
+If PowerShell blocks virtual-environment activation, use Command Prompt instead:
+.venv\Scripts\activate.bat
+macOS or Linux
+cd TrustLens
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r backend/requirements.txt
-```
-
----
-
-## 6. Startup Commands
-
-### Option A: Unified Full-Stack Server (Recommended)
-
-FastAPI automatically serves the frontend static files at root `/` while exposing API endpoints at `/api`:
-
-```bash
-# From workspace root with .venv activated:
+python -m pip install --upgrade pip
+python -m pip install -r backend/requirements.txt
+Run the Application
+Start the full-stack server from the project root with the virtual environment activated:
 uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000 --reload
-```
+Open these local URLs:
+Resource	URL
+TrustLens interface	http://127.0.0.1:8000/
+API health check	http://127.0.0.1:8000/api/health
+Interactive API docs	http://127.0.0.1:8000/api/docs
 
-Open your browser and navigate to:
-- **Application UI:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-- **Interactive Swagger API Docs:** [http://127.0.0.1:8000/api/docs](http://127.0.0.1:8000/api/docs)
-- **Health Endpoint:** [http://127.0.0.1:8000/api/health](http://127.0.0.1:8000/api/health)
 
-### Option B: Standalone Frontend Server (Decoupled Dev)
-
-If you prefer running the frontend on a separate port (e.g., port 3000):
-
-```bash
-# Terminal 1 — Start Backend:
+If port 8000 is unavailable, try port 8081:
+uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8081 --reload
+Then use http://127.0.0.1:8081/ and the corresponding /api/health and /api/docs URLs.
+Optional: Run the frontend separately
+For decoupled local development, start the API in one terminal:
 uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000
-
-# Terminal 2 — Start Frontend Server:
+Start a simple static server in a second terminal:
 python -m http.server 3000 --directory frontend
-```
+Open http://127.0.0.1:3000/. The frontend's API base URL and CORS configuration must match the local backend address.
+API Reference
+The interactive Swagger documentation is available at /api/docs while the server is running.
+GET /api/health
+Checks whether the API is responding.
 
-The frontend automatically connects to the backend at `http://127.0.0.1:8000` via configured CORS headers.
+Example:
+curl http://127.0.0.1:8000/api/health
+A successful response includes the service status, application name, analyzer version, and timestamp.
+POST /api/analyze
+Submits text for risk assessment.
 
----
-
-## 7. Example API Usage
-
-### Health Check
-
-**Request:**
-```http
-GET /api/health HTTP/1.1
-Host: 127.0.0.1:8000
-```
-
-**Response (200 OK):**
-```json
+Example request:
+curl -X POST "http://127.0.0.1:8000/api/analyze" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "You have been selected for an internship. Pay a refundable registration deposit today to secure your position.",
+    "input_type": "job_offer",
+    "language_hint": "en"
+  }'
+Example response shape (values abbreviated for readability):
 {
-  "status": "ok",
-  "application_name": "TrustLens AI",
-  "analyzer_version": "1.0.0",
-  "timestamp": "2026-10-25T08:18:52.932071+00:00"
-}
-```
-
-### Risk Assessment
-
-**Request:**
-```http
-POST /api/analyze HTTP/1.1
-Host: 127.0.0.1:8000
-Content-Type: application/json
-
-{
-  "text": "Congratulations! You have been selected for the Data Analyst Internship at Tech Global. Your stipend will be $3,500/month working from home. To confirm your laptop dispatch and secure your placement, you are required to pay a registration fee of $150 refundable deposit before Monday via Zelle or wire transfer. Immediate response required within 24 hours or the offer will be revoked!",
+  "analysis_id": "example-analysis-id",
   "input_type": "job_offer",
-  "language_hint": "en"
-}
-```
-
-**Response (200 OK):**
-```json
-{
-  "analysis_id": "c1f729b1-0428-406a-a6ea-8a56b26d36e2",
-  "timestamp": "2026-10-25T08:20:28.910245+00:00",
-  "input_type": "job_offer",
-  "character_count": 397,
-  "word_count": 59,
+  "character_count": 100,
+  "word_count": 17,
   "risk_score": 79,
   "risk_level": "Critical",
-  "verdict_summary": "Critical scam indicators identified (Risk Score: 79/100). The message exhibits acute red flags in financial manipulation, urgency and pressure, employment & scholarship red flags, including high-consequence solicitations such as upfront monetary demands or credential harvesting. We strongly advise ceasing communication immediately.",
+  "verdict_summary": "Critical scam indicators identified.",
   "findings": [
     {
       "rule_id": "FIN-01",
       "title": "Mandatory Upfront Fee or Deposit Demand",
       "category": "Financial Manipulation",
       "severity": "critical",
-      "matched_evidence": [
-        "registration fee",
-        "refundable deposit"
-      ],
-      "explanation": "Legitimate employers and official scholarship foundations never ask candidates or students to pay application fees, training charges, laptop deposits, or onboarding expenses out of pocket.",
-      "recommended_action": "Do not transfer any money. Real internships and scholarships do not charge students to participate."
-    },
-    {
-      "rule_id": "URG-01",
-      "title": "Artificial Urgency and Manufactured Pressure",
-      "category": "Urgency and Pressure",
-      "severity": "medium",
-      "matched_evidence": [
-        "within 24 hours",
-        "Immediate response required",
-        "offer will be revoked"
-      ],
-      "explanation": "Scammers create artificial deadlines and urgency to trigger panic, rushing victims into hasty decisions before they have time to consult parents, university advisors, or official company directories.",
-      "recommended_action": "Take your time. Legitimate recruiters and universities allow reasonable time to evaluate legitimate offers."
-    },
-    {
-      "rule_id": "EMP-01",
-      "title": "Guaranteed Selection Without Formal Evaluation",
-      "category": "Employment & Scholarship Red Flags",
-      "severity": "high",
-      "matched_evidence": [
-        "Congratulations! You have been selected"
-      ],
-      "explanation": "Real companies and research labs screen candidates through interviews, technical challenges, and reference reviews. Offers delivered with zero prior application or evaluation are almost universally fraudulent.",
-      "recommended_action": "Verify if you ever applied to this company. Authentic recruiters do not hire blind candidates via unsolicited text."
+      "matched_evidence": ["registration deposit"],
+      "explanation": "Upfront payment demands are a serious warning sign.",
+      "recommended_action": "Do not transfer money; verify the offer independently."
     }
   ],
   "positive_signals": [],
   "recommended_actions": [
-    "Do NOT send money, pay registration fees, purchase gift cards, or deposit unsolicited checks.",
-    "Check whether you previously submitted a formal application for this role or scholarship.",
-    "Consult your university career center, placement officer, or trusted advisor before taking action.",
-    "Report suspicious solicitations to your campus IT security desk or national fraud reporting portal."
+    "Do not send money before independently verifying the offer."
   ],
   "analyzer_method": "heuristic_rule_engine",
-  "disclaimer": "Heuristic assessment based on pattern detection — not a definitive determination of fraud or authenticity. Never rely solely on automated analysis; verify directly through official institutional channels."
+  "disclaimer": "Heuristic assessment, not a definitive fraud determination."
 }
-```
+The response above illustrates the response structure; exact scores, findings, timestamps, and wording depend on the submitted input and current rules.
+Run Tests
+From the repository root, with the virtual environment activated:
+python -m pytest backend/tests -v
+The documented test run collected 16 tests, all of which passed:
+16 passed, 5 warnings
+Coverage includes:
+- Health endpoint and API documentation.
+- Empty, whitespace-only, oversized, malformed, and unexpected-type inputs.
+- Detection of upfront fees, OTP requests, urgency, and suspicious URLs.
+- Contextual negation and legitimate-message cases.
+- Duplicate-evidence suppression.
+- Risk score bounds and risk-band consistency.
+- Response schema validation.
+Warnings were reported in the recorded run; passing tests do not imply that warnings have been resolved. Re-run the test suite after making changes.
+Privacy and Security
+TrustLens is designed to analyze message content locally through the application backend. The current implementation is described as in-memory processing: message bodies are not intentionally persisted to a database or forwarded to third-party analysis services. Recent-analysis history is client-side and session-only.
 
----
+Keep these deployment considerations in mind:
+- Do not submit passwords, live OTPs, private keys, or other secrets to any analysis tool.
+- Do not expose a development server directly to the public internet without reviewing authentication, rate limiting, logging, CORS, and deployment settings.
+- Verify the actual deployment configuration before making privacy guarantees for a hosted instance.
+- Safe DOM rendering helps reduce cross-site scripting risk, but it does not replace broader security review.
+Limitations
+- Heuristic, not forensic: a score is a pattern-based estimate, not legal proof of fraud.
+- False positives and false negatives are possible: legitimate messages may contain suspicious wording, and sophisticated scams may evade current rules.
+- No baseline external threat-intelligence lookup: the baseline analyzer does not query paid DNS, malware, or reputation feeds.
+- No authenticity guarantee: positive signals or a low score do not prove that a sender, domain, or offer is genuine.
+- Verification remains necessary: contact the organization through a known official website, verified phone number, or your institution's placement/career office—not through contact details supplied only in the suspicious message.
+AI-Assisted Development Disclosure
+In line with the stated Glitchathon guidelines, the project disclosure identifies:
+- AI coding assistant: Antigravity AI Coding Assistant (Gemini 3.8 Flash High), as recorded by the project author.
+- Human guidance and review: implementation was reviewed and debugged against the project's automated tests and local API behavior.
+Update this disclosure if the tools or development process change. Follow the event organizers' current requirements for attribution and submission.
+Project Status
+TrustLens AI has a local FastAPI backend, a browser-based analyzer, deterministic risk scoring, explanatory findings, and an automated test suite. Use the setup and test commands above to run the version in your checkout.
 
-## 8. Detection Limitations & Ethical Disclaimers
-
-1. **Heuristic Guidepost, Not Legal Proof:** TrustLens AI uses transparent pattern matching and structural indicators. A high risk score indicates strong congruence with known scam strategies, but does not constitute a formal forensic verdict.
-2. **Absence of Proof is Not Proof of Absence:** A score of `0` indicates that no explicit indicators were triggered; it does not guarantee that a sender is authentic. Attackers may send neutral introductory greetings before escalating to fraudulent demands.
-3. **No External Threat Intelligence Lookup in Baseline:** The baseline engine operates strictly offline without calling external paid DNS or malware domain intelligence feeds.
-4. **Student Privacy Protection:** Messages are analyzed in volatile memory. No text bodies, IP addresses, or student information are persisted.
-
----
-
-## 9. Automated Testing
-
-The suite includes 16 test cases covering health checks, OpenAPI specifications, input constraints, empty/whitespace/oversized inputs, detection rules, contextual negation, score bounds, and schema contracts.
-
-Run the tests using `pytest`:
-
-```bash
-pytest backend/tests -v
-```
-
-**Actual Test Suite Output:**
-```
-============================= test session starts =============================
-platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.7.0
-rootdir: E:\TrustLens
-collected 16 items
-
-backend/tests/test_analysis.py::test_normal_legitimate_internship_message PASSED [  6%]
-backend/tests/test_analysis.py::test_message_requesting_upfront_fee PASSED [ 12%]
-backend/tests/test_analysis.py::test_scholarship_message_requesting_otp PASSED [ 18%]
-backend/tests/test_analysis.py::test_artificial_urgency_and_financial_pressure PASSED [ 25%]
-backend/tests/test_analysis.py::test_suspicious_url_indicators PASSED    [ 31%]
-backend/tests/test_analysis.py::test_safe_educational_discussion_containing_otp_and_payment PASSED [ 37%]
-backend/tests/test_analysis.py::test_duplicate_evidence_suppression PASSED [ 43%]
-backend/tests/test_analysis.py::test_score_bounded_between_zero_and_hundred PASSED [ 50%]
-backend/tests/test_analysis.py::test_risk_level_matches_score_bands PASSED [ 56%]
-backend/tests/test_analysis.py::test_response_schema_contains_required_fields PASSED [ 62%]
-backend/tests/test_health.py::test_health_endpoint_success PASSED        [ 68%]
-backend/tests/test_health.py::test_swagger_documentation_accessible PASSED [ 75%]
-backend/tests/test_validation.py::test_empty_input_rejection PASSED      [ 81%]
-backend/tests/test_validation.py::test_whitespace_only_input_rejection PASSED [ 87%]
-backend/tests/test_validation.py::test_oversized_input_rejection PASSED  [ 93%]
-backend/tests/test_validation.py::test_unexpected_input_types_and_malformed_requests PASSED [100%]
-
-======================= 16 passed, 5 warnings in 1.73s ========================
-```
-
----
-
-## 10. AI-Assisted Development Disclosure
-
-In accordance with Glitchathon guidelines:
-- **Architecture & System Design:** Designed by full-stack engineering principles with clear separation of FastAPI services, Pydantic schemas, and vanilla ES6+ frontend.
-- **Assisting AI Model:** Antigravity AI Coding Assistant (Gemini 3.8 Flash High).
-- **Human Guidance & Review:** Code was reviewed, verified, and debugged against live test suites, validating contextual negation rules, UI design tokens, and live API endpoints.
+Remember: pause, inspect the evidence, and verify through official channels before trusting a suspicious offer.
