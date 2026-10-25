@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrustLens AI — Cybersecurity Scam Detection Dashboard</title>
+  <meta name="description" content="Professional cybersecurity analysis workspace for students to evaluate suspicious internship offers, scholarship messages, job postings, and URLs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Ambient SOC Lighting -->
+  <div class="ambient-glow glow-top" aria-hidden="true"></div>
+  <div class="ambient-glow glow-bottom" aria-hidden="true"></div>
+
+  <!-- Compact Top Navigation Bar -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="#home" class="brand brand-link" id="brandHomeBtn" aria-label="TrustLens AI Home">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <circle cx="12" cy="11" r="3" />
+            <path d="m15 14 3 3" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">TrustLens<span class="brand-accent">.AI</span></span>
+          <span class="brand-tagline">Cyber Threat Triage</span>
+        </div>
+      </a>
+
+      <!-- Primary Navigation Links -->
+      <nav class="header-nav" aria-label="Primary Navigation">
+        <button type="button" class="header-nav-link active" id="navLinkHome">Home</button>
+        <button type="button" class="header-nav-link" id="navLinkAnalyzer">Analyzer</button>
+        <button type="button" class="header-nav-link" id="navLinkHowItWorks">How It Works</button>
+      </nav>
+
+      <div class="header-actions">
+        <div class="status-pill" title="Deterministic heuristic engine running locally in FastAPI runtime">
+          <span class="status-dot"></span>
+          <span class="status-text">Local Engine Active</span>
+        </div>
+        <div class="privacy-pill" title="In-memory processing only. User submissions are never logged or stored.">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          <span>Zero Data Retention</span>
+        </div>
+        <button type="button" id="headerCtaBtn" class="btn btn-primary header-cta-btn" title="Open Message Risk Analyzer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m21 21-4.3-4.3" />
+            <circle cx="11" cy="11" r="8" />
+          </svg>
+          <span>Launch Analyzer</span>
+        </button>
+        <!-- Accessible fallback trigger for modal -->
+        <button id="howItWorksBtn" class="nav-btn hidden" aria-haspopup="dialog" aria-expanded="false" title="Learn about heuristic rules and privacy" aria-hidden="true"></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       VIEW 1: Dedicated Product Landing Page (Home View)
+       ========================================================================== -->
+  <div id="homeView" class="home-view" role="region" aria-label="Product Landing Page">
+    <!-- Hero Section -->
+    <section class="home-hero">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="pulse-radar"></span>
+          <span>Deterministic Scam Detection for Students</span>
+        </div>
+        <h1 class="hero-headline">
+          Think before<br />
+          <span class="headline-gradient">you trust.</span>
+        </h1>
+        <p class="hero-subtext">
+          Inspect suspicious internship offers, fake scholarship notifications, recruitment messages, and deceptive links before surrendering your personal data or money. Built on transparent local heuristics with zero data retention.
+        </p>
+        <div class="hero-cta-group">
+          <button type="button" id="heroAnalyzeCta" class="btn-hero-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m21 21-4.3-4.3" />
+              <circle cx="11" cy="11" r="8" />
+            </svg>
+            <span>Analyze a Message</span>
+          </button>
+          <button type="button" id="heroHowItWorksCta" class="btn-hero-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+              <path d="M12 17h.01" />
+            </svg>
+            <span>How It Works</span>
+          </button>
+        </div>
+        <div class="hero-trust-bar">
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+            <span>100% In-Memory RAM</span>
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+            <span>Zero Data Stored</span>
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
+            <span>Local Python Rules</span>
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><line x1="4.93" y1="4.93" x2="19.07" y2="19.07" /></svg>
+            <span>No Cloud Tracking</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CSS Visual Element: Interactive Simulated Threat Triage Card -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="visual-card">
+          <div class="visual-header">
+            <div class="visual-dots">
+              <span class="v-dot red"></span>
+              <span class="v-dot amber"></span>
+              <span class="v-dot green"></span>
+            </div>
+            <div class="visual-title">
+              <span class="soc-dot"></span>
+              <span>ACTIVE THREAT INTERCEPTION • SOC SIMULATION</span>
+            </div>
+            <span class="visual-tag font-mono">FIN-01 / URG-01</span>
+          </div>
+          <div class="visual-body">
+            <div class="sample-snippet-box">
+              <span class="snippet-label">Incoming Solicitation Stream:</span>
+              <p class="snippet-text">
+                &ldquo;Congratulations! You have been selected for the Data Analyst Internship.
+                To secure your placement, you must <mark class="token-crit">pay a registration fee of $150 refundable deposit</mark> before Monday via Zelle.
+                <mark class="token-warn">Immediate response required within 24 hours</mark> or the offer will be revoked!
+                Contact recruiter on <mark class="token-info">Telegram @recruiter_board</mark>.&rdquo;
+              </p>
+            </div>
+
+            <!-- Threat Breakdown Pill Stack -->
+            <div class="visual-findings-preview">
+              <div class="v-finding crit">
+                <span class="v-code font-mono">FIN-01</span>
+                <span class="v-name">Mandatory Upfront Fee Demand ($150)</span>
+                <span class="v-badge">CRITICAL</span>
+              </div>
+              <div class="v-finding warn">
+                <span class="v-code font-mono">URG-01</span>
+                <span class="v-name">Manufactured Deadline (24 hours)</span>
+                <span class="v-badge">HIGH</span>
+              </div>
+              <div class="v-finding info">
+                <span class="v-code font-mono">URL-03</span>
+                <span class="v-name">Channel Shift to Telegram Handle</span>
+                <span class="v-badge">ELEVATED</span>
+              </div>
+            </div>
+
+            <!-- Mini Scorecard Bar -->
+            <div class="visual-scorecard">
+              <div class="v-score-wrap">
+                <span class="v-score font-mono">79</span>
+                <span class="v-denom font-mono">/100</span>
+              </div>
+              <div class="v-verdict-wrap">
+                <span class="v-verdict-title">CRITICAL RISK ASSESSMENT</span>
+                <span class="v-verdict-desc">High probability of advance-fee employment scam. Refuse payment.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Four Core Detection Categories Section -->
+    <section class="home-section" id="threatVectors">
+      <div class="home-section-header">
+        <span class="section-kicker">DETECTION ARCHITECTURE</span>
+        <h2 class="section-title">The Four Vectors of Academic & Employment Fraud</h2>
+        <p class="section-subtitle">
+          Scam solicitations targeting students rely on predictable psychological pressure and structural anomalies. TrustLens AI breaks down every message against four deterministic detection categories.
+        </p>
+      </div>
+
+      <div class="categories-grid">
+        <!-- Vector 1: Financial Manipulation -->
+        <div class="category-card">
+          <div class="cat-card-header">
+            <div class="cat-icon-box red">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="20" height="14" x="2" y="5" rx="2" />
+                <line x1="2" y1="10" x2="22" y2="10" />
+              </svg>
+            </div>
+            <span class="cat-code font-mono">FIN-01 • FIN-02 • FIN-03</span>
+          </div>
+          <h3 class="cat-title">Financial Demands & Advance Fees</h3>
+          <p class="cat-desc">
+            Detects mandatory registration fees, laptop equipment deposits, background check fees, training onboarding charges, counterfeit check overpayments, and requests for irreversible payment via Zelle, wire transfer, Bitcoin, or retail gift cards.
+          </p>
+          <div class="cat-example">
+            <span class="example-label">Typical Solicitation Pattern:</span>
+            <code class="example-text">&ldquo;Pay $150 refundable deposit before Monday via Zelle for your laptop dispatch.&rdquo;</code>
+          </div>
+        </div>
+
+        <!-- Vector 2: Artificial Urgency -->
+        <div class="category-card">
+          <div class="cat-card-header">
+            <div class="cat-icon-box amber">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <span class="cat-code font-mono">URG-01 • URG-02</span>
+          </div>
+          <h3 class="cat-title">Artificial Urgency & Coercion</h3>
+          <p class="cat-desc">
+            Identifies manufactured expiration deadlines, immediate forfeiture threats, coercive demands to respond within 24 hours, and instructions to keep offers confidential or bypass university career counselors.
+          </p>
+          <div class="cat-example">
+            <span class="example-label">Typical Solicitation Pattern:</span>
+            <code class="example-text">&ldquo;Immediate response required within 24 hours or the offer will be permanently revoked!&rdquo;</code>
+          </div>
+        </div>
+
+        <!-- Vector 3: Credential Harvesting -->
+        <div class="category-card">
+          <div class="cat-card-header">
+            <div class="cat-icon-box orange">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+            </div>
+            <span class="cat-code font-mono">SENS-01 • SENS-02</span>
+          </div>
+          <h3 class="cat-title">Credential & OTP Harvesting</h3>
+          <p class="cat-desc">
+            Catches deceptive attempts to extract SMS/email One-Time Passwords (OTPs), multi-factor codes, student portal login passwords, bank account PINs, or premature Social Security Numbers under the guise of &ldquo;identity verification&rdquo;.
+          </p>
+          <div class="cat-example">
+            <span class="example-label">Typical Solicitation Pattern:</span>
+            <code class="example-text">&ldquo;Provide the 6-digit verification code (OTP) sent to your mobile to release the scholarship.&rdquo;</code>
+          </div>
+        </div>
+
+        <!-- Vector 4: Suspicious URLs -->
+        <div class="category-card">
+          <div class="cat-card-header">
+            <div class="cat-icon-box cyan">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+              </svg>
+            </div>
+            <span class="cat-code font-mono">URL-01 • URL-02 • URL-03</span>
+          </div>
+          <h3 class="cat-title">Suspicious URLs & Channel Redirection</h3>
+          <p class="cat-desc">
+            Unmasks disguised links, URL shorteners (bit.ly, tinyurl), raw IP addresses, high-risk TLDs (.xyz, .top), lookalike brand domains, free webmail addresses spoofing corporate HR (@gmail.com), and rapid shifting to Telegram or WhatsApp.
+          </p>
+          <div class="cat-example">
+            <span class="example-label">Typical Solicitation Pattern:</span>
+            <code class="example-text">&ldquo;Contact our recruiter on Telegram @google_careers or visit http://192.168.1.55.&rdquo;</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Three-Step "How It Works" Section -->
+    <section class="home-section" id="howItWorksSection">
+      <div class="home-section-header">
+        <span class="section-kicker">STREAMLINED TRIAGE</span>
+        <h2 class="section-title">How It Works in 3 Simple Steps</h2>
+        <p class="section-subtitle">
+          Rapid, private cybersecurity evaluation without mandatory accounts, external trackers, or cloud storage.
+        </p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num font-mono">01</span>
+            <div class="step-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+              </svg>
+            </div>
+          </div>
+          <h3 class="step-title">Paste & Categorize</h3>
+          <p class="step-desc">
+            Paste any suspicious internship email, scholarship award notification, recruiter message, or URL. Select the context category (Job, Scholarship, Direct Message, or URL) to activate targeted heuristic rules.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num font-mono">02</span>
+            <div class="step-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <circle cx="12" cy="11" r="3" />
+                <path d="m15 14 3 3" />
+              </svg>
+            </div>
+          </div>
+          <h3 class="step-title">Local Deterministic Analysis</h3>
+          <p class="step-desc">
+            Our Python backend evaluates the text locally in volatile RAM. It analyzes syntactic patterns, contextual negations (such as &ldquo;we never charge fees&rdquo;), and link structures in milliseconds without cloud dependencies.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num font-mono">03</span>
+            <div class="step-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+            </div>
+          </div>
+          <h3 class="step-title">Actionable Score & Evidence</h3>
+          <p class="step-desc">
+            Review an explainable risk score from 0 to 100, verbatim quoted evidence explaining every triggered rule, affirmative hygiene signals, and a prioritized checklist of safe next steps.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature Section: Explainability & Risk Scoring -->
+    <section class="home-section" id="features">
+      <div class="home-section-header">
+        <span class="section-kicker">ENGINEERED FOR TRUST</span>
+        <h2 class="section-title">Designed for Explainability, Not Black-Box Guesses</h2>
+        <p class="section-subtitle">
+          Unlike probabilistic generative AI that can hallucinate plausibility, TrustLens provides transparent, deterministic, and verifiable threat analysis.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              <line x1="9" y1="10" x2="15" y2="10" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Verbatim Evidence Quotes</h3>
+          <p class="feature-desc">
+            Every warning sign extracts the exact words from the submitted message that triggered the rule, paired with rule identifiers (e.g. <code>FIN-01</code>, <code>URG-01</code>) and clear explanations.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M16 12a4 4 0 1 1-8 0" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Bounded 0–100 Risk Scale</h3>
+          <p class="feature-desc">
+            Composite risk scoring employs mathematically bounded logarithmic increments with diminishing returns. This prevents score runaway while properly escalating compound threat levels.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Contextual Negation Safeguards</h3>
+          <p class="feature-desc">
+            Intelligent regex boundary rules distinguish between educational warnings (e.g. &ldquo;never share your OTP&rdquo;, &ldquo;we never charge fees&rdquo;) and malicious demands, suppressing false-positive alerts on benign messages.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Privacy Architecture & Honest Limitations Section -->
+    <section class="home-section" id="privacyArchitecture">
+      <div class="home-section-header">
+        <span class="section-kicker">INTEGRITY & ARCHITECTURE</span>
+        <h2 class="section-title">Privacy by Design. Honest Limitations.</h2>
+        <p class="section-subtitle">
+          We believe cybersecurity tools protecting students must respect user privacy and be transparent about their operational scope.
+        </p>
+      </div>
+
+      <div class="privacy-layout-grid">
+        <div class="privacy-panel">
+          <div class="panel-header">
+            <div class="panel-badge-icon green">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+            </div>
+            <h3 class="panel-title">Privacy Architecture</h3>
+          </div>
+          <ul class="panel-list">
+            <li>
+              <strong>100% In-Memory RAM Processing:</strong> Text submitted for analysis is processed strictly in volatile server memory. Nothing is written to a database or stored on disk.
+            </li>
+            <li>
+              <strong>Zero Data Retention:</strong> No account required, no tracking cookies, and no telemetry tracking your identity or submitted content.
+            </li>
+            <li>
+              <strong>Local Python Execution:</strong> The deterministic rule engine runs locally within the FastAPI application. Your messages are never sent to external AI providers or cloud feeds.
+            </li>
+            <li>
+              <strong>Session-Only History:</strong> Recent assessments are stored strictly in browser JavaScript memory for the current session and never persist across page reloads.
+            </li>
+          </ul>
+        </div>
+
+        <div class="privacy-panel">
+          <div class="panel-header">
+            <div class="panel-badge-icon amber">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </div>
+            <h3 class="panel-title">Honest Scope & Limitations</h3>
+          </div>
+          <ul class="panel-list">
+            <li>
+              <strong>Heuristic Pattern Evaluation:</strong> TrustLens detects recognized tactical indicators of fraud. A low risk score indicates few heuristic red flags were found, not an absolute legal guarantee.
+            </li>
+            <li>
+              <strong>No Live Commercial Threat Feeds:</strong> The application does not claim to cross-reference live commercial threat-intelligence databases. It operates via explainable local rules.
+            </li>
+            <li>
+              <strong>Original Message Never Saved in History:</strong> When you revisit a recent analysis, only the verdict and score metadata are restored; the raw message text is never retained.
+            </li>
+            <li>
+              <strong>Human Verification Required:</strong> TrustLens is designed to assist student skepticism, not replace due diligence. Always verify offers directly through registered university portals.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Call-To-Action Banner -->
+    <section class="home-cta-banner">
+      <div class="cta-banner-content">
+        <h2 class="cta-banner-title">Think before you trust. Test a message now.</h2>
+        <p class="cta-banner-desc">
+          Evaluate suspicious internship offers, scholarship notices, or recruiter messages in seconds with local, private heuristic triage.
+        </p>
+        <div class="cta-banner-btns">
+          <button type="button" id="bottomAnalyzeCta" class="btn-hero-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m21 21-4.3-4.3" />
+              <circle cx="11" cy="11" r="8" />
+            </svg>
+            <span>Analyze a Message Now</span>
+          </button>
+          <button type="button" id="bottomHowItWorksCta" class="btn-hero-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+              <path d="M12 17h.01" />
+            </svg>
+            <span>Review Detection Rules</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==========================================================================
+       VIEW 2: Functional SOC Threat-Intelligence Dashboard (Analyzer View)
+       ========================================================================== -->
+  <div id="analyzerView" class="dashboard-layout hidden" role="region" aria-label="Risk Analyzer Workspace">
+    <!-- Left Sidebar -->
+    <aside class="dashboard-sidebar" aria-label="Dashboard Navigation">
+      <div class="sidebar-top">
+        <div class="sidebar-brand-mini">
+          <div class="brand-icon small">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </div>
+          <div class="brand-mini-info">
+            <span class="brand-mini-name">TrustLens<span class="brand-accent">.AI</span></span>
+            <span class="brand-mini-version">SOC Workspace v1.0</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Workspace Navigation">
+          <button type="button" class="sidebar-nav-item" id="sidebarNavHome">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            <span class="nav-text">Home</span>
+          </button>
+
+          <button type="button" class="sidebar-nav-item active" id="navAnalyzer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m21 21-4.3-4.3" />
+              <circle cx="11" cy="11" r="8" />
+            </svg>
+            <span class="nav-text">Risk Analyzer</span>
+          </button>
+
+          <button type="button" class="sidebar-nav-item" id="navRecent">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            <span class="nav-text">Recent Analyses</span>
+            <span id="sidebarRecentCount" class="sidebar-badge">0</span>
+          </button>
+
+          <button type="button" class="sidebar-nav-item" id="navHowItWorks">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+              <path d="M12 17h.01" />
+            </svg>
+            <span class="nav-text">How It Works</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-status-card">
+          <div class="status-card-header">
+            <span class="soc-dot"></span>
+            <span class="status-card-title">Local Engine Security</span>
+          </div>
+          <div class="status-card-specs">
+            <div class="spec-row">
+              <span class="spec-label">Engine:</span>
+              <span class="spec-value">Deterministic Heuristic</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Session:</span>
+              <span class="spec-value">In-Memory (0% DB)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Telemetry:</span>
+              <span class="spec-value text-emerald">Zero Data Sent</span>
+            </div>
+          </div>
+          <p class="status-card-note">Analysis executes strictly within your local FastAPI runtime.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main" id="mainContent">
+      <!-- Concise Workspace Header -->
+      <header class="workspace-header" id="analyzerSection">
+        <div class="workspace-header-text">
+          <div class="workspace-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <span>Threat Intelligence Triage</span>
+          </div>
+          <h1 class="workspace-title">Message Risk Analyzer</h1>
+          <p class="workspace-subtitle">Inspect suspicious offers, messages, and links before trusting them.</p>
+        </div>
+      </header>
+
+      <!-- Analyzer Workspace Card -->
+      <section class="analyzer-card" aria-label="Message Analyzer Workspace">
+        <div class="card-header">
+          <div class="type-selector-wrapper">
+            <span class="selector-label">Context Category:</span>
+            <div class="type-pill-group" role="radiogroup" aria-label="Input category">
+              <button type="button" class="type-pill active" data-type="job_offer" role="radio" aria-checked="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                </svg>
+                <span>Job / Internship</span>
+              </button>
+              <button type="button" class="type-pill" data-type="scholarship" role="radio" aria-checked="false">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                  <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                </svg>
+                <span>Scholarship</span>
+              </button>
+              <button type="button" class="type-pill" data-type="message" role="radio" aria-checked="false">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                <span>Direct Message</span>
+              </button>
+              <button type="button" class="type-pill" data-type="url" role="radio" aria-checked="false">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                </svg>
+                <span>URL / Link</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="sample-actions">
+            <span class="sample-label">Load Realistic Sample:</span>
+            <div class="sample-btns">
+              <button type="button" class="sample-btn" id="sampleLegitBtn" title="Load genuine corporate internship invite">
+                <span>✅ Legitimate Offer</span>
+              </button>
+              <button type="button" class="sample-btn warning" id="sampleFeeBtn" title="Load upfront laptop fee scam">
+                <span>⚠️ Laptop Fee Scam</span>
+              </button>
+              <button type="button" class="sample-btn danger" id="sampleOtpBtn" title="Load scholarship OTP harvesting lure">
+                <span>🚨 Scholarship OTP</span>
+              </button>
+              <button type="button" class="sample-btn danger" id="sampleTelegramBtn" title="Load off-platform Telegram phishing offer">
+                <span>💬 Telegram / Crypto</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Textarea Input Box -->
+        <div class="input-container">
+          <label for="messageInput" class="sr-only">Paste suspicious message or offer here</label>
+          <textarea
+            id="messageInput"
+            placeholder="Paste the suspicious internship offer, scholarship email, recruiter WhatsApp/Telegram text, or URL here to evaluate..."
+            rows="6"
+            maxlength="10000"
+            spellcheck="false"
+          ></textarea>
+          
+          <!-- Inline Warning / Error Alert -->
+          <div id="inputAlert" class="input-alert hidden" role="alert" aria-live="assertive">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            <span id="inputAlertText"></span>
+          </div>
+        </div>
+
+        <!-- Action Toolbar -->
+        <div class="card-footer">
+          <div class="counter-group">
+            <span id="charCount" class="char-count">0</span>
+            <span class="char-max">/ 10,000 chars</span>
+            <span class="divider">•</span>
+            <span id="wordCount" class="word-count">0 words</span>
+          </div>
+
+          <div class="button-group">
+            <button type="button" id="clearBtn" class="btn btn-secondary" title="Clear input text">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 6h18" />
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+              </svg>
+              <span>Clear</span>
+            </button>
+
+            <button type="button" id="analyzeBtn" class="btn btn-primary" title="Analyze message for scam indicators">
+              <span class="btn-spinner hidden" id="analyzeSpinner"></span>
+              <svg id="analyzeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m21 21-4.3-4.3" />
+                <circle cx="11" cy="11" r="8" />
+              </svg>
+              <span id="analyzeBtnText">Analyze Message</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results Area: Either Empty State or Real Analysis Results -->
+      <div class="results-wrapper">
+        <!-- Polished Empty State (Shown when no analysis active) -->
+        <div id="resultsEmptyState" class="results-empty-card" aria-label="Awaiting Message Analysis">
+          <div class="empty-state-badge">
+            <span class="pulse-radar"></span>
+            <span>Awaiting Message Analysis</span>
+          </div>
+          <div class="empty-state-icon-wrap">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </div>
+          <h3 class="empty-state-title">Ready to Analyze</h3>
+          <p class="empty-state-desc">
+            Submit a message or select a sample above to perform a deterministic heuristic evaluation.
+            TrustLens AI will inspect linguistic markers, payment demands, credential requests, and link structures in real time.
+          </p>
+          <div class="empty-categories-panel">
+            <span class="empty-categories-label">Active Heuristic Categories Inspected:</span>
+            <div class="empty-category-tags">
+              <div class="empty-tag">
+                <span class="tag-dot red"></span>
+                <span>Upfront Fees & Deposits</span>
+              </div>
+              <div class="empty-tag">
+                <span class="tag-dot amber"></span>
+                <span>Credential & OTP Harvesting</span>
+              </div>
+              <div class="empty-tag">
+                <span class="tag-dot amber"></span>
+                <span>Artificial Urgency & Coercion</span>
+              </div>
+              <div class="empty-tag">
+                <span class="tag-dot orange"></span>
+                <span>Shortened & Deceptive URLs</span>
+              </div>
+              <div class="empty-tag">
+                <span class="tag-dot cyan"></span>
+                <span>Unsolicited Hiring Claims</span>
+              </div>
+              <div class="empty-tag">
+                <span class="tag-dot green"></span>
+                <span>Context Negation & Edu Safety</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real Results Section (Shown when analysis completes or is restored from history) -->
+        <section id="resultsSection" class="results-section hidden" aria-live="polite" aria-label="Risk Assessment Results">
+          <!-- Historical Record Notification Banner -->
+          <div id="historicalBanner" class="historical-banner hidden" role="status">
+            <div class="historical-content">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              <span><strong>Historical Assessment Record:</strong> Displaying cached assessment from <span id="historicalTimestamp"></span>. Original message content was not stored.</span>
+            </div>
+            <button type="button" id="historicalDismissBtn" class="historical-dismiss-btn" aria-label="Dismiss notice">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Result Metadata Header -->
+          <div class="results-meta-header">
+            <div class="meta-left">
+              <span class="report-title">Analysis Assessment Report</span>
+              <span id="metaId" class="meta-id">ID: <span></span></span>
+            </div>
+            <div class="meta-right">
+              <span id="metaTypeBadge" class="meta-badge">JOB OFFER</span>
+              <span id="metaTimestamp" class="meta-time"></span>
+            </div>
+          </div>
+
+          <!-- Top Result Area: Score Card + Verdict Card -->
+          <div class="overview-grid">
+            <!-- Circular Risk Gauge Card -->
+            <div class="risk-score-card">
+              <div class="gauge-wrapper">
+                <svg class="score-gauge" viewBox="0 0 160 160" width="160" height="160">
+                  <circle class="gauge-bg" cx="80" cy="80" r="68" />
+                  <circle id="gaugeFill" class="gauge-fill" cx="80" cy="80" r="68" stroke-dasharray="427.26" stroke-dashoffset="427.26" />
+                </svg>
+                <div class="gauge-content">
+                  <span id="scoreNumber" class="score-number">0</span>
+                  <span class="score-scale">/ 100</span>
+                </div>
+              </div>
+
+              <div class="score-details">
+                <div class="score-level-badge" id="riskLevelBadge">
+                  <span class="level-indicator"></span>
+                  <span id="riskLevelText">LOW</span>
+                </div>
+                <p class="score-subtext" id="scoreSubtext">Heuristic risk evaluation</p>
+              </div>
+            </div>
+
+            <!-- Verdict Summary Card -->
+            <div class="verdict-card">
+              <div class="verdict-header">
+                <div class="verdict-icon" id="verdictIcon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                </div>
+                <div class="verdict-title-box">
+                  <span class="verdict-label">Executive Finding</span>
+                  <h2 id="verdictHeadline" class="verdict-headline">Calculated Assessment</h2>
+                </div>
+              </div>
+              <p id="verdictSummary" class="verdict-text">
+                Evaluating patterns...
+              </p>
+
+              <div class="verdict-quick-stats">
+                <div class="stat-pill">
+                  <span class="stat-label">Warning Signs:</span>
+                  <span id="findingsCount" class="stat-value">0</span>
+                </div>
+                <div class="stat-pill">
+                  <span class="stat-label">Positive Signals:</span>
+                  <span id="positiveCount" class="stat-value">0</span>
+                </div>
+                <div class="stat-pill">
+                  <span class="stat-label">Engine:</span>
+                  <span class="stat-value font-mono">Heuristic v1.0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Responsive Two-Column Detail Grid: LEFT Warning Signs | RIGHT Actions & Positive Signals -->
+          <div class="results-detail-grid">
+            <!-- Left Column: Detected Warning Signs -->
+            <div class="detail-col-left">
+              <div class="findings-container">
+                <div class="section-title-row">
+                  <div class="title-with-icon">
+                    <svg class="icon-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                      <line x1="12" y1="9" x2="12" y2="13" />
+                      <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                    <h3 class="section-title">Detected Warning Signs</h3>
+                  </div>
+                  <span id="findingsBadge" class="findings-pill">0 Detected</span>
+                </div>
+
+                <div id="findingsList" class="findings-list">
+                  <!-- Populated dynamically via safe DOM methods -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Recommendations, Positive Signals, Disclaimer, and Actions -->
+            <div class="detail-col-right">
+              <!-- Positive Signals Section -->
+              <div id="positiveSignalsContainer" class="positive-container hidden">
+                <div class="section-title-row">
+                  <div class="title-with-icon">
+                    <svg class="icon-success" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                      <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                    <h3 class="section-title">Positive Signals</h3>
+                  </div>
+                  <span class="positive-pill">Observed Hygiene</span>
+                </div>
+                <p class="positive-disclaimer">
+                  * Note: Positive hygiene signals reflect common professional practices, but must never be taken as a sole guarantee of authenticity.
+                </p>
+                <ul id="positiveSignalsList" class="positive-list">
+                  <!-- Populated dynamically -->
+                </ul>
+              </div>
+
+              <!-- Recommended Safe Next Steps -->
+              <div class="recommendations-container">
+                <div class="section-title-row">
+                  <div class="title-with-icon">
+                    <svg class="icon-cyan" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="m9 11 3 3L22 4" />
+                      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                    </svg>
+                    <h3 class="section-title">Recommended Next Steps</h3>
+                  </div>
+                </div>
+                <ol id="recommendationsList" class="recommendations-list">
+                  <!-- Populated dynamically -->
+                </ol>
+              </div>
+
+              <!-- Legal & Heuristic Disclaimer -->
+              <div class="disclaimer-banner">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="16" x2="12" y2="12" />
+                  <line x1="12" y1="8" x2="12.01" y2="8" />
+                </svg>
+                <div class="disclaimer-content">
+                  <strong>Heuristic Assessment Notice:</strong>
+                  <span id="disclaimerText">
+                    This risk analysis is generated using deterministic pattern indicators and does not represent a calibrated fraud probability or definitive legal guarantee. Always verify offers directly with official university career services or registered corporate offices.
+                  </span>
+                </div>
+              </div>
+
+              <!-- Action Buttons Footer -->
+              <div class="results-actions">
+                <button type="button" id="copyReportBtn" class="btn btn-secondary">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                  </svg>
+                  <span id="copyBtnText">Copy Assessment Report</span>
+                </button>
+
+                <button type="button" id="analyzeAnotherBtn" class="btn btn-primary">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                    <path d="M21 3v5h-5" />
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                    <path d="M8 16H3v5" />
+                  </svg>
+                  <span>Analyze Another</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Recent Analyses Section (In-Memory Session Only) -->
+      <section class="recent-analyses-card" id="recentSection" aria-labelledby="recentHeading">
+        <div class="recent-header">
+          <div class="recent-title-group">
+            <div class="recent-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <div>
+              <div class="recent-heading-row">
+                <h2 id="recentHeading" class="recent-heading">Recent Analyses</h2>
+                <span id="recentCountBadge" class="recent-count-badge">0 / 5</span>
+                <span class="session-pill" title="Stored in JavaScript memory only. Cleared on tab close or page reload.">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  In-Memory Session
+                </span>
+              </div>
+              <p class="recent-subtext">Click any recent record to revisit its assessment without resending data to the backend.</p>
+            </div>
+          </div>
+
+          <div class="recent-actions">
+            <button type="button" id="clearHistoryBtn" class="btn btn-ghost" title="Clear in-memory session history" disabled>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 6h18" />
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+              </svg>
+              <span>Clear History</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Confirmation Box for Clear History -->
+        <div id="clearConfirmBox" class="clear-confirm-box hidden" role="alertdialog" aria-labelledby="clearConfirmTitle" aria-describedby="clearConfirmDesc">
+          <div class="clear-confirm-text">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <div>
+              <strong id="clearConfirmTitle">Clear all in-memory history?</strong>
+              <p id="clearConfirmDesc">This will remove all session records from memory immediately.</p>
+            </div>
+          </div>
+          <div class="clear-confirm-btns">
+            <button type="button" id="confirmClearBtn" class="btn btn-danger-sm">Yes, Clear</button>
+            <button type="button" id="cancelClearBtn" class="btn btn-secondary-sm">Cancel</button>
+          </div>
+        </div>
+
+        <!-- History List Container -->
+        <div id="recentAnalysesList" class="recent-list" role="list">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Enhanced Modal: How It Works -->
+  <div id="howItWorksModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="brand-icon small">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </div>
+          <h2 id="modalTitle" class="modal-title">How TrustLens AI Operates</h2>
+        </div>
+        <button id="closeModalBtn" class="modal-close-btn" aria-label="Close dialog">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Section A: How Analysis Works -->
+        <div class="modal-section">
+          <div class="modal-section-badge">Section A</div>
+          <h3>How Analysis Works</h3>
+          <p>
+            TrustLens AI operates on a <strong>deterministic, explainable baseline engine</strong> written in Python. When you submit an internship offer, scholarship message, or URL, the backend processes the text locally through multi-stage structural pattern matching, context window parsing, and negation analysis.
+          </p>
+          <p>
+            Unlike generative AI models that can hallucinate plausibility or guess without accountability, every finding in TrustLens maps directly to verifiable deception mechanisms documented in student recruitment fraud investigations.
+          </p>
+        </div>
+
+        <!-- Section B: Risk Score Interpretation -->
+        <div class="modal-section">
+          <div class="modal-section-badge">Section B</div>
+          <h3>Risk Score Interpretation (0–100)</h3>
+          <p>
+            The calculated risk score is a bounded heuristic index from <strong>0</strong> (very low risk) to <strong>100</strong> (critical risk). It aggregates weighted rule triggers, applies non-linear diminishing returns to prevent runaway inflation, discounts overlapping signals, and factors in observed hygiene indicators.
+          </p>
+          <div class="score-bands-bar" role="img" aria-label="Score bands: Low 0-19, Moderate 20-44, High 45-69, Critical 70-100">
+            <div class="band band-low">0–19: Low</div>
+            <div class="band band-moderate">20–44: Moderate</div>
+            <div class="band band-high">45–69: High</div>
+            <div class="band band-critical">70–100: Critical</div>
+          </div>
+          <div class="bands-detail-grid">
+            <div class="band-detail">
+              <strong>0–19 (Low):</strong> No recognized scam indicators detected; affirmative professional hygiene patterns present. Standard due diligence still advised.
+            </div>
+            <div class="band-detail">
+              <strong>20–44 (Moderate):</strong> Atypical solicitations, exaggerated pay promises, or informal communication shifts. Verification required.
+            </div>
+            <div class="band-detail">
+              <strong>45–69 (High):</strong> Substantial red flags (e.g. shortened links, guaranteed hiring without interview, brand spoofing via free webmail). Do not provide sensitive data.
+            </div>
+            <div class="band-detail">
+              <strong>70–100 (Critical):</strong> Acute threat indicators including mandatory upfront fees, OTP/password demands, fake check overpayments, or untraceable crypto/gift-card payment methods.
+            </div>
+          </div>
+          <p class="small-text">
+            * <em>Important:</em> These bands are heuristic severity thresholds, <strong>not calibrated statistical probabilities of fraud</strong> or absolute legal guarantees.
+          </p>
+        </div>
+
+        <!-- Section C: Detection Signals -->
+        <div class="modal-section">
+          <div class="modal-section-badge">Section C</div>
+          <h3>Implemented Detection Signals</h3>
+          <p>The engine actively inspects messages against six specialized detector categories:</p>
+          <div class="modal-grid">
+            <div class="modal-rule-card">
+              <span class="card-num">FIN-01 / 02 / 03</span>
+              <h4>Upfront Fees & Deposit Demands</h4>
+              <p>Detects mandatory registration fees, laptop deposits, onboarding training charges, irreversible payment via retail gift cards/crypto/Zelle, and counterfeit check overpayment schemes.</p>
+            </div>
+            <div class="modal-rule-card">
+              <span class="card-num">URG-01 / 02</span>
+              <h4>Artificial Urgency & Secrecy</h4>
+              <p>Flags coercive deadlines (&ldquo;within 2 hours&rdquo;), immediate revocation threats, demands to keep offers confidential, and instructions to bypass formal HR or university channels.</p>
+            </div>
+            <div class="modal-rule-card">
+              <span class="card-num">SENS-01 / 02</span>
+              <h4>OTP & Sensitive Credential Harvesting</h4>
+              <p>Identifies attempts to extract SMS/email One-Time Passwords (OTPs), 2FA codes, account passwords, bank account PINs, or premature government identity numbers (SSN).</p>
+            </div>
+            <div class="modal-rule-card">
+              <span class="card-num">URL-01 / 02 / 03 / COMM</span>
+              <h4>Suspicious URLs & Channel Redirection</h4>
+              <p>Detects link shorteners (bit.ly, tinyurl), raw IP addresses, high-risk TLDs (.xyz, .top, .click), lookalike brand domains, free mailboxes (@gmail.com) claiming corporate identity, and rapid redirection to Telegram or WhatsApp.</p>
+            </div>
+            <div class="modal-rule-card">
+              <span class="card-num">EMP-01 / 02 / SCHOL-01</span>
+              <h4>Employment & Scholarship Red Flags</h4>
+              <p>Catches guaranteed selection without any evaluation, disproportionate pay for trivial tasks ($500/day typing), and pay-to-claim bogus scholarship awards.</p>
+            </div>
+            <div class="modal-rule-card">
+              <span class="card-num">CONTEXT-AWARE</span>
+              <h4>Contextual Negation Safeguards</h4>
+              <p>Distinguishes safe educational warnings (e.g. &ldquo;never share your OTP&rdquo;, &ldquo;we do not charge fees&rdquo;, cybersecurity lectures) to prevent false-positive alerts on benign safety advice.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section D: Privacy and Limitations -->
+        <div class="modal-section">
+          <div class="modal-section-badge">Section D</div>
+          <h3>Privacy Architecture & Limitations</h3>
+          <div class="privacy-notice-box">
+            <ul class="privacy-bullet-list">
+              <li><strong>Local Backend Processing:</strong> In the current deployment, your text is analyzed in volatile memory on the local server. Content is not stored in a database or used for model training.</li>
+              <li><strong>No External API Dependency:</strong> The baseline detection engine runs entirely locally without transmitting your text to external LLMs or third-party threat feeds.</li>
+              <li><strong>Session-Only Recent History:</strong> Recent analyses are stored strictly in JavaScript browser memory. Closing the tab or refreshing the page clears the history immediately.</li>
+              <li><strong>Original Text Never Stored in History:</strong> The session history retains only high-level metadata (score, category, timestamp, findings summary); the original submitted text is never saved.</li>
+              <li><strong>No Absolute Guarantee:</strong> A low score indicates few recognized heuristic red flags were detected—it does not constitute affirmative verification of the sender's identity.</li>
+              <li><strong>Deployment Caveat:</strong> Local privacy applies to this local deployment; we do not claim full privacy under every possible multi-tenant or unencrypted hosting architecture.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="closeModalFooterBtn" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="toast hidden" role="status" aria-live="polite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+    <span id="toastMessage">Report copied to clipboard</span>
+  </div>
+
+  <!-- Dashboard & Product Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <div class="footer-brand">
+          <span class="brand-name">TrustLens<span class="brand-accent">.AI</span></span>
+          <p>Think before you trust. Deterministic scam triage for students.</p>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <div class="footer-links-list">
+          <button type="button" class="footer-nav-link" id="footerLinkHome">Home</button>
+          <button type="button" class="footer-nav-link" id="footerLinkAnalyzer">Risk Analyzer</button>
+          <button type="button" class="footer-nav-link" id="footerLinkHowItWorks">How It Works</button>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Student Privacy Commitment</h4>
+        <p>No account required. Analyzed text is processed strictly in-memory by your local backend server and never saved to a database.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Responsible Usage</h4>
+        <p>TrustLens AI provides heuristic risk analysis. Always verify offers directly with official educational institutions.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Built for the Glitchathon Hackathon • SOC Dashboard Edition v1.0.0</span>
+      <span>Deterministic Cybersecurity Analysis</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
