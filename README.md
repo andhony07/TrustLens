@@ -1,106 +1,117 @@
+<div align="center">
+
 TrustLens AI
 Think before you trust.
+Explainable scam-risk assessment for suspicious internship offers, scholarships, job postings, URLs, and forwarded messages.
 
-An explainable, privacy-first scam-risk assessment tool that helps students evaluate suspicious internship offers, scholarship messages, job postings, URLs, and forwarded texts.
 
-TrustLens AI is a local-first cybersecurity triage application built with FastAPI, Pydantic, HTML, CSS, and vanilla JavaScript. It uses a deterministic rule-based engine to identify suspicious patterns, explain the evidence, calculate a risk score from 0–100, and recommend practical next steps.
-Important: TrustLens provides a heuristic assessment, not a definitive fraud verdict. Always verify offers through official channels.
 
-Contents
-- Why TrustLens?
-- Features
-- How It Works
-- Risk Score Guide
-- Technology Stack
-- Project Structure
-- Requirements
-- Installation
-- Run the Application
-- API Reference
-- Run Tests
-- Privacy and Security
-- Limitations
-- AI-Assisted Development Disclosure
-Why TrustLens?
-Students may receive fraudulent internship offers, fake scholarship announcements, job postings, and messages designed to steal money or credentials. Common tactics include upfront fees, artificial deadlines, suspicious links, and requests for one-time passwords (OTPs).
 
-TrustLens helps users spot warning signs before acting. Instead of returning only a label, it explains which indicators were detected and suggests what to do next.
+Overview · Features · Architecture · Quick Start · API · Testing · Security
+</div>
+
+Overview
+Students can be targeted by fake internships, fraudulent scholarships, impersonated recruiters, and messages designed to steal money or credentials. Common warning signs include upfront fees, artificial urgency, suspicious links, and requests for one-time passwords (OTPs).
+
+TrustLens AI is a local-first cybersecurity triage application. It evaluates submitted text with a deterministic, rule-based engine, assigns an interpretable risk score from 0–100, shows the evidence behind the assessment, and recommends practical next steps.
+[!IMPORTANT]
+TrustLens is a decision-support tool, not a definitive fraud detector. A low score does not prove authenticity. Verify opportunities through official channels before sending money, sharing documents, or disclosing credentials.
+
+At a glance
+	
+Purpose	Explain warning signs in potentially fraudulent messages
+Analysis method	Deterministic rules and contextual pattern detection
+Risk output	Score, risk band, findings, evidence, and recommendations
+Backend	Python, FastAPI, Pydantic
+Frontend	HTML, CSS, vanilla JavaScript
+Persistence	No database is part of the baseline design; recent reports are held in browser memory
+External API keys	Not required for baseline analysis
+
+
 Features
-Two connected views
-- Product landing page (#home) — introduces the product, threat categories, analysis workflow, explainability, and privacy principles.
-- Analyzer workspace (#analyzer) — provides a focused message-analysis interface, risk gauge, evidence breakdown, and recommendations.
-- Hash-based navigation — supports direct links, refresh persistence, and browser Back/Forward navigation between views.
-Explainable risk analysis
-- Deterministic rule-based detection rather than a generative model.
-- Risk score from 0 to 100, with four risk bands.
-- Weighted scoring with diminishing returns, multi-indicator escalation, and duplicate-evidence suppression.
-- Findings include rule identifiers, categories, severity, matched evidence, explanations, and recommended actions.
-- Context and negation safeguards help distinguish suspicious wording from educational warnings such as “never share your OTP.”
-- Positive hygiene signals can identify reassuring context, but never prove that a message is legitimate.
-Privacy-conscious interaction
-- Recent analyses are held in JavaScript memory only, with up to five entries.
-- History does not retain the original message text; it allows users to revisit structured reports without another API request.
-- Recent history disappears when the page is refreshed or the tab is closed.
-- The application is designed for local processing and does not require external API keys.
-- Findings and history are rendered using safe DOM APIs such as textContent.
-Useful workflow features
-- Prioritized recommendations for suspicious messages.
-- Copyable assessment reports in Markdown format.
-- Responsive dark cybersecurity interface.
-- Educational “How It Works” content covering detection, scoring, and limitations.
+Explainable detection
+- Detects patterns associated with financial manipulation, urgency, sensitive-information requests, suspicious URLs, and employment or scholarship red flags.
+- Produces findings with rule identifiers, severity, matched evidence, explanations, and recommended actions.
+- Uses weighted scoring, diminishing returns, multi-indicator escalation, and duplicate-evidence suppression.
+- Applies contextual safeguards for negation and educational messages—for example, “never share your OTP.”
+- Identifies positive hygiene signals as context, without treating them as proof that an offer is genuine.
+Purpose-built interface
+- Landing page (#home) introduces the product, threat categories, workflow, and privacy principles.
+- Analyzer workspace (#analyzer) presents the message input, risk gauge, evidence, and next steps.
+- Hash-based navigation supports deep links, refresh persistence, and browser Back/Forward navigation.
+- Responsive dark interface with an educational “How It Works” view.
+Practical workflow
+- Keeps up to five recent structured assessments in JavaScript memory.
+- Allows a prior report to be revisited without submitting the original message again.
+- Does not retain the original message in recent-analysis history.
+- Supports copying an assessment report in Markdown format.
+- Uses safe DOM APIs such as textContent when rendering untrusted text.
 How It Works
-1. Submit a message — paste an internship offer, scholarship message, job posting, or other suspicious text into the analyzer.
-2. Inspect patterns — deterministic detectors look for known financial, urgency, credential, URL, and employment-related indicators.
-3. Calculate risk — the scoring engine combines detected indicators and maps the result to a risk band.
-4. Review evidence — inspect matched evidence, explanations, and severity rather than relying only on the score.
-5. Choose a safer next step — follow the recommendations and verify the sender through official channels.
-Risk score guide
-Score	Level	Interpretation
-0–19	Low	Few explicit risk indicators were detected. Continue using normal caution.
-20–44	Moderate	Some atypical patterns warrant closer inspection.
-45–69	High	Multiple or substantial warning signs call for independent verification.
-70–100	Critical	Strong warning signs may include upfront payment demands or credential harvesting. Avoid acting until independently verified.
+```mermaid
+flowchart TD
+    A[User submits a message] --> B[Validate request]
+    B --> C[Run deterministic detectors]
+    C --> D[Collect evidence and contextual signals]
+    D --> E[Aggregate risk score]
+    E --> F[Assign risk band]
+    F --> G[Generate explanation and recommendations]
+    G --> H[Return structured assessment]
+    H --> I[Render report in browser]
+```
+1. Submit: Paste a suspicious message into the analyzer.
+2. Validate: The API checks the request against its input schema and limits.
+3. Detect: Rule-based detectors look for known warning patterns and relevant context.
+4. Score: The scoring service combines signals into a bounded score.
+5. Explain: The response includes findings, evidence, severity, and recommended actions.
+6. Review: Use the result as a prompt for independent verification—not as the final authority.
+Risk Score Guide
+Score	Risk level	Suggested response
+0–19	Low	Few explicit indicators were detected. Continue to use normal caution.
+20–44	Moderate	Review the message carefully and verify unusual details.
+45–69	High	Independently verify the sender and offer before proceeding.
+70–100	Critical	Do not pay, share credentials, or act on the message until it has been independently verified.
 
 
-A low score does not mean that a message is safe. It means the current rules did not detect many explicit indicators.
-Detector identifiers
-The analyzer may return rule identifiers from categories such as:
-- FIN — financial manipulation, including upfront fee or deposit demands.
-- URG — urgency and pressure tactics.
-- SENS — sensitive information or credential requests.
-- URL — suspicious URL indicators.
-- EMP — employment and scholarship red flags.
-Exact findings depend on the implemented rules and the submitted text.
-Technology Stack
-Layer	Technology
-Backend API	Python, FastAPI
-Request/response validation	Pydantic
-ASGI server	Uvicorn
-Detection and scoring	Deterministic rules, regular expressions, contextual safeguards
-Frontend	HTML5, CSS, vanilla JavaScript
-Automated tests	pytest
+The score is a heuristic summary of detected patterns. It is not a probability that a message is fraudulent.
+Detector families
+Prefix	Focus
+FIN	Financial manipulation, including upfront fees or deposits
+URG	Urgency and pressure tactics
+SENS	Sensitive information and credential requests
+URL	Suspicious URL indicators
+EMP	Employment and scholarship red flags
 
 
-No external AI API key is required for the baseline analyzer.
-Project Structure
+The exact findings depend on the rules implemented and the submitted text.
+Architecture
+TrustLens separates the API, analysis services, and browser interface.
+```mermaid
+flowchart LR
+    U[Browser / User] <--> FE[HTML · CSS · JavaScript]
+    FE <--> API[FastAPI routes]
+    API --> V[Pydantic schemas]
+    API --> S[Analyzer service]
+    S --> D[Detectors]
+    S --> SC[Scoring]
+    S --> EX[Explanations and recommendations]
+    S --> R[Structured assessment]
+    R --> API
+```
+Repository layout
 TrustLens/
 ├── backend/
 │   ├── app/
-│   │   ├── __init__.py
-│   │   ├── main.py
-│   │   ├── config.py
-│   │   ├── schemas.py
+│   │   ├── main.py                 # FastAPI application entry point
+│   │   ├── config.py               # Application settings
+│   │   ├── schemas.py              # Request and response models
 │   │   ├── api/
-│   │   │   ├── __init__.py
-│   │   │   └── routes.py
+│   │   │   └── routes.py           # Health and analysis endpoints
 │   │   └── services/
-│   │       ├── __init__.py
-│   │       ├── analyzer.py
-│   │       ├── detectors.py
-│   │       ├── scoring.py
-│   │       └── explanations.py
+│   │       ├── analyzer.py         # Analysis orchestration
+│   │       ├── detectors.py        # Rule and context detection
+│   │       ├── scoring.py          # Risk-score aggregation
+│   │       └── explanations.py     # Findings and recommendations
 │   ├── tests/
-│   │   ├── __init__.py
 │   │   ├── test_health.py
 │   │   ├── test_validation.py
 │   │   └── test_analysis.py
@@ -111,58 +122,70 @@ TrustLens/
 │   └── app.js
 ├── .gitignore
 └── README.md
-Requirements
-- Python 3.12 or newer, compatible with the installed project dependencies.
-- Windows, macOS, or Linux.
-- A modern browser such as Chrome, Edge, Firefox, or Safari.
-- No external API keys for the baseline local application.
-Installation
+Technology Stack
+Component	Technology
+Language	Python
+API framework	FastAPI
+Data validation	Pydantic
+ASGI server	Uvicorn
+Detection	Deterministic rules, regular expressions, contextual safeguards
+User interface	HTML5, CSS, vanilla JavaScript
+Tests	pytest
+
+
+The baseline implementation does not require a hosted AI service or external API key.
+Quick Start
+Prerequisites
+- Python 3.12 or newer, compatible with the installed dependencies
+- Windows, macOS, or Linux
+- A modern browser
+- Git, if cloning the repository
+1. Get the source
+If you have not cloned the repository yet:
+git clone https://github.com/andhony07/TrustLens.git
+cd TrustLens
+If the project is already on your machine, navigate to the project root instead.
+2. Create and activate a virtual environment
 Windows PowerShell
-Run from the project directory:
-cd E:\TrustLens
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r backend/requirements.txt
-If PowerShell blocks virtual-environment activation, use Command Prompt instead:
+If script activation is blocked, use Command Prompt:
 .venv\Scripts\activate.bat
-macOS or Linux
-cd TrustLens
+macOS / Linux
 python3 -m venv .venv
 source .venv/bin/activate
+3. Install dependencies
 python -m pip install --upgrade pip
 python -m pip install -r backend/requirements.txt
-Run the Application
-Start the full-stack server from the project root with the virtual environment activated:
+4. Start the application
+Run from the repository root:
 uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000 --reload
-Open these local URLs:
-Resource	URL
-TrustLens interface	http://127.0.0.1:8000/
-API health check	http://127.0.0.1:8000/api/health
+Open the local application:
+Resource	Address
+Web interface	http://127.0.0.1:8000/
+Health check	http://127.0.0.1:8000/api/health
 Interactive API docs	http://127.0.0.1:8000/api/docs
 
 
-If port 8000 is unavailable, try port 8081:
+If port 8000 is unavailable, run on port 8081:
 uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8081 --reload
-Then use http://127.0.0.1:8081/ and the corresponding /api/health and /api/docs URLs.
-Optional: Run the frontend separately
-For decoupled local development, start the API in one terminal:
+Then use the equivalent URLs with port 8081.
+Optional: run the frontend separately
+For local decoupled development, run the backend in one terminal:
 uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000
-Start a simple static server in a second terminal:
+In a second terminal:
 python -m http.server 3000 --directory frontend
-Open http://127.0.0.1:3000/. The frontend's API base URL and CORS configuration must match the local backend address.
+Visit http://127.0.0.1:3000/. Confirm that the frontend API base URL and backend CORS settings match your local setup.
 API Reference
-The interactive Swagger documentation is available at /api/docs while the server is running.
+Interactive API documentation is available at /api/docs while the server is running.
 GET /api/health
-Checks whether the API is responding.
-
-Example:
+Checks whether the service is responding.
 curl http://127.0.0.1:8000/api/health
-A successful response includes the service status, application name, analyzer version, and timestamp.
+A successful response includes service status, application name, analyzer version, and a timestamp.
 POST /api/analyze
 Submits text for risk assessment.
 
-Example request:
+Example request
 curl -X POST "http://127.0.0.1:8000/api/analyze" \
   -H "Content-Type: application/json" \
   -d '{
@@ -170,7 +193,7 @@ curl -X POST "http://127.0.0.1:8000/api/analyze" \
     "input_type": "job_offer",
     "language_hint": "en"
   }'
-Example response shape (values abbreviated for readability):
+Illustrative response
 {
   "analysis_id": "example-analysis-id",
   "input_type": "job_offer",
@@ -186,7 +209,7 @@ Example response shape (values abbreviated for readability):
       "category": "Financial Manipulation",
       "severity": "critical",
       "matched_evidence": ["registration deposit"],
-      "explanation": "Upfront payment demands are a serious warning sign.",
+      "explanation": "An upfront payment demand is a serious warning sign.",
       "recommended_action": "Do not transfer money; verify the offer independently."
     }
   ],
@@ -197,41 +220,52 @@ Example response shape (values abbreviated for readability):
   "analyzer_method": "heuristic_rule_engine",
   "disclaimer": "Heuristic assessment, not a definitive fraud determination."
 }
-The response above illustrates the response structure; exact scores, findings, timestamps, and wording depend on the submitted input and current rules.
-Run Tests
-From the repository root, with the virtual environment activated:
+This is an illustrative response shape, not a guaranteed output for every message. Scores, findings, timestamps, and wording depend on the actual input and implemented rules. Refer to the running Swagger documentation for the current API contract.
+Testing
+Activate the virtual environment, then run from the repository root:
 python -m pytest backend/tests -v
-The documented test run collected 16 tests, all of which passed:
-16 passed, 5 warnings
-Coverage includes:
-- Health endpoint and API documentation.
-- Empty, whitespace-only, oversized, malformed, and unexpected-type inputs.
-- Detection of upfront fees, OTP requests, urgency, and suspicious URLs.
-- Contextual negation and legitimate-message cases.
-- Duplicate-evidence suppression.
-- Risk score bounds and risk-band consistency.
-- Response schema validation.
-Warnings were reported in the recorded run; passing tests do not imply that warnings have been resolved. Re-run the test suite after making changes.
-Privacy and Security
-TrustLens is designed to analyze message content locally through the application backend. The current implementation is described as in-memory processing: message bodies are not intentionally persisted to a database or forwarded to third-party analysis services. Recent-analysis history is client-side and session-only.
+The project documentation records a test run with 16 passed and 5 warnings. Re-run the tests against your current checkout to verify its present state.
 
-Keep these deployment considerations in mind:
-- Do not submit passwords, live OTPs, private keys, or other secrets to any analysis tool.
-- Do not expose a development server directly to the public internet without reviewing authentication, rate limiting, logging, CORS, and deployment settings.
-- Verify the actual deployment configuration before making privacy guarantees for a hosted instance.
-- Safe DOM rendering helps reduce cross-site scripting risk, but it does not replace broader security review.
-Limitations
-- Heuristic, not forensic: a score is a pattern-based estimate, not legal proof of fraud.
-- False positives and false negatives are possible: legitimate messages may contain suspicious wording, and sophisticated scams may evade current rules.
-- No baseline external threat-intelligence lookup: the baseline analyzer does not query paid DNS, malware, or reputation feeds.
-- No authenticity guarantee: positive signals or a low score do not prove that a sender, domain, or offer is genuine.
-- Verification remains necessary: contact the organization through a known official website, verified phone number, or your institution's placement/career office—not through contact details supplied only in the suspicious message.
+The documented suite covers:
+- Health and API documentation endpoints
+- Empty, whitespace-only, oversized, malformed, and unexpected-type inputs
+- Upfront-fee, OTP, urgency, and suspicious-URL indicators
+- Contextual negation and legitimate-message cases
+- Duplicate-evidence suppression
+- Score bounds, risk-band consistency, and response schema
+Warnings in a previous run should be reviewed separately; a passing test suite does not mean warnings have been resolved.
+Privacy, Security, and Limitations
+Data handling
+The baseline design processes submitted text through the local backend and does not intentionally persist message bodies to a database or forward them to third-party analysis services. Recent-analysis history is held in browser memory and is limited to structured reports; the original text is not retained in that history.
+
+These statements describe the baseline design. Verify the actual configuration before making guarantees about a hosted deployment.
+Security considerations
+- Do not submit passwords, live OTPs, private keys, or other secrets.
+- Do not expose a development server directly to the public internet without a security review.
+- Before deployment, review authentication, rate limiting, request limits, CORS, logging, transport security, and hosting configuration.
+- Safe DOM rendering helps reduce XSS risk but is not a substitute for a broader security assessment.
+Known limitations
+- Heuristic, not forensic: scores are based on implemented patterns and are not legal or forensic proof.
+- False positives and negatives: legitimate messages can contain suspicious language, while sophisticated scams may evade current rules.
+- No baseline external threat intelligence: the baseline engine does not query external DNS, malware, or domain-reputation feeds.
+- Positive signals are not proof: a familiar-looking domain, reassuring wording, or a low score cannot establish authenticity.
+- Independent verification is essential: use contact details from an organization's known official website or ask your institution's placement/career office. Do not rely solely on details supplied in the suspicious message.
 AI-Assisted Development Disclosure
-In line with the stated Glitchathon guidelines, the project disclosure identifies:
-- AI coding assistant: Antigravity AI Coding Assistant (Gemini 3.8 Flash High), as recorded by the project author.
-- Human guidance and review: implementation was reviewed and debugged against the project's automated tests and local API behavior.
-Update this disclosure if the tools or development process change. Follow the event organizers' current requirements for attribution and submission.
-Project Status
-TrustLens AI has a local FastAPI backend, a browser-based analyzer, deterministic risk scoring, explanatory findings, and an automated test suite. Use the setup and test commands above to run the version in your checkout.
+The project author’s recorded disclosure identifies Antigravity AI Coding Assistant (Gemini 3.8 Flash High) as a development aid. Implementation was reviewed and debugged against the project’s automated tests and local API behavior.
 
-Remember: pause, inspect the evidence, and verify through official channels before trusting a suspicious offer.
+Keep this disclosure accurate as tools and contributions change, and follow the event organizers' current attribution requirements.
+Project Status
+TrustLens AI includes a FastAPI backend, browser-based analyzer, deterministic scoring, explanatory findings, and an automated test suite. The commands in this README are intended for local development; run the tests and inspect the API docs against your current checkout before relying on a particular version.
+Contributing
+For proposed changes:
+1. Create a focused branch.
+2. Make a small, reviewable change.
+3. Run the automated test suite.
+4. Update documentation when behavior or API contracts change.
+5. Open a pull request describing the motivation, implementation, and verification performed.
+License
+No license is specified in this README. Add a LICENSE file and update this section if you intend to grant others explicit permission to use, modify, and distribute the project.
+<div align="center">
+
+Pause. Inspect the evidence. Verify through official channels.
+</div>
